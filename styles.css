@@ -1,0 +1,41 @@
+body {
+    background-color: white;
+  }
+
+h1 {
+    text-align:center;
+    font-size: 40px;
+}
+
+table {
+  text-align: center;
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  height: 50px;
+  font-size: 40px;
+}
+
+td {
+  font-size: 40px;
+  font-style: Arial;
+}
+
+select { 
+  width: 8em;
+  height: 3em;
+  font-size: 40px;
+}
+input {
+  width: 8em;
+  height: 3em;
+  font-size: 40px;
+}

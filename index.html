@@ -1,0 +1,230 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <title>Ping Pong League</title>
+    </head>
+    <body>
+        <h1>Ping Pong League</h1>
+            <table class="center" id="Standings">
+                <tr>
+                    <th onclick="sortTable(0)">Player</th>
+                    <th onclick="sortTable(1)">Win Percentage</th>
+                    <th onclick="sortTable(2)">Wins</th>
+                    <th onclick="sortTable(3)">Losses</th>
+                </tr>
+                <tr id="Jason">
+                    <td>Jason</td>
+                    <td id="win1">0%</td>
+                    <td>3</td>
+                    <td>4</td>
+                </tr>
+                <tr id="Yair">
+                    <td>Yair</td>
+                    <td id="win2">0%</td>
+                    <td>18</td>
+                    <td>2</td>
+                </tr>
+                <tr id="Rafa">
+                    <td>Rafa</td>
+                    <td id="win3">0%</td>
+                    <td>0</td>
+                    <td>7</td>
+                </tr>
+                <tr id="Ethan">
+                    <td>Ethan</td>
+                    <td id="win4">0%</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr id="Max">
+                    <td>Max</td>
+                    <td id="win5">0%</td>
+                    <td>2</td>
+                    <td>2</td>
+                </tr>
+                <tr id="Felipe">
+                    <td>Felipe</td>
+                    <td id="win6">0%</td>
+                    <td>0</td>
+                    <td>2</td>
+                </tr>
+                <tr id="Dan">
+                    <td>Dan</td>
+                    <td id="win7">0%</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+                <tr id="Harsh">
+                    <td>Harsh</td>
+                    <td id="win8">0%</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="Michael">
+                    <td>Michael</td>
+                    <td id="win9">0%</td>
+                    <td>0</td>
+                    <td>2</td>
+                </tr>
+                <tr  id="Zahavi">
+                    <td>Zahavi</td>
+                    <td id="win10">0%</td>
+                    <td>0</td>
+                    <td>1</td>
+                </tr>
+
+            </table>
+    </body>
+    <script>
+        function updateScores(){
+            table = document.getElementById("Standings");
+            rows = table.rows; 
+            for(i = 1; i < (rows.length - 1); i++) {
+                var wins = rows[i].cells[2];
+                var losses = rows[i].cells[3];
+                var winNodes = parseInt(wins.childNodes.item(0).data);
+                var lossNodes = parseInt(losses.childNodes.item(0).data);
+                var percentage  = String(Math.round((winNodes/(winNodes+lossNodes))*100))+"%";
+                if(winNodes == 0){
+                    document.getElementById("win" + String(i)).innerHTML = "0%";
+                }
+                else{
+                    document.getElementById("win" + String(i)).innerHTML = percentage;
+                }
+                
+            }
+        }
+        updateScores()
+    </script>
+    <script>
+    function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("Standin");
+    switching = true;
+    dir = "asc";
+   
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir == "asc" && n==0 || dir == "desc" && n!=0) {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } 
+            else if (dir == "asc" && n!=0 || dir == "desc" && n==0) {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+
+        switchcount ++;
+        } 
+        else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+    </script>
+    <script type="text/javascript">
+        function getValue(data){
+            var myDiv = document.getElementById( data.id + '-value' );
+            myDiv.innerHTML = data.value;
+        }
+    </script>
+
+
+    <table class="center" id="Match">
+    <tr>
+        <td>
+            <select id="select1">
+            <option value="$">Player 1</option>
+            <option value="val1">Jason</option>
+            <option value="val2">Yair</option>
+            <option value="val3">Rafa</option>
+            <option value="val4">Max</option>
+            <option value="val5">Ethan</option>
+            <option value="val6">Dan</option>
+            <option value="val7">Harsh</option>
+            <option value="val8">Felipe</option>
+            <option value="val9">Michael</option>
+            <option value="val10">Zahavi</option>
+            </select>
+        </td>
+        <td id="row-1"></td>
+        <td>vs</td>
+        <td>
+            <select id="select2">
+            <option value="$">Player 2</option>
+            <option value="val1">Jason</option>
+            <option value="val2">Yair</option>
+            <option value="val3">Rafa</option>
+            <option value="val4">Max</option>
+            <option value="val5">Ethan</option>
+            <option value="val6">Dan</option>
+            <option value="val7">Harsh</option>
+            <option value="val8">Felipe</option>
+            <option value="val9">Michael</option>
+            <option value="val10">Zahavi</option>
+            </select>
+        </td>
+        <td>
+            <div><input id="score1" type="number">Player 1 Score</div>
+        </td>
+        <td>
+            <div><input id="score2" type="number">Player 2 Score</div>
+        </td>
+        <td>
+            <button onclick="submitGame()">Submit Game</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="getCurrentStandings()">Get Standings</button>
+        </td>
+    </tr>
+    </table>
+
+    <script>
+        function submitGame(){
+            var table = document.getElementById("Match");
+            var e = document.getElementById("select1");
+            var e2 = document.getElementById("select2");
+            var player1 = e.options[e.selectedIndex].text;
+            var player2 = e2.options[e2.selectedIndex].text;
+            var row1 = document.getElementById(player1); 
+            var row2 = document.getElementById(player2)
+            var score1 = document.getElementById("score1").value;
+            var score2 = document.getElementById("score2").value;
+            if(score1 > score2){
+                document.querySelector("#" + player1 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player2 + " > td:nth-child(4)").innerHTML--
+            }
+            else if(score1 < score2){
+                document.querySelector("#" + player2 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player1 + " > td:nth-child(4)").innerHTML--
+            }
+            updateScores()
+        }
+    </script>
+    <script>
+        function getCurrentStandings(){
+            table = document.getElementById("Standings")
+            fetch("standings.html")
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+        }
+        getCurrentStandings()
+    </script>
+</html>
