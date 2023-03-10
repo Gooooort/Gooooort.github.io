@@ -139,12 +139,7 @@
     }
 }
     </script>
-    <script type="text/javascript">
-        function getValue(data){
-            var myDiv = document.getElementById( data.id + '-value' );
-            myDiv.innerHTML = data.value;
-        }
-    </script>
+   
 
 
     <table class="center" id="Match">
@@ -210,10 +205,10 @@
             var score1 = document.getElementById("score1").value;
             var score2 = document.getElementById("score2").value;
             if(score1 > score2){
-                document.querySelector("#" + player1 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player2 + " > td:nth-child(4)").innerHTML--
+                document.querySelector("#" + player1 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player2 + " > td:nth-child(4)").innerHTML++
             }
             else if(score1 < score2){
-                document.querySelector("#" + player2 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player1 + " > td:nth-child(4)").innerHTML--
+                document.querySelector("#" + player2 + " > td:nth-child(3)").innerHTML++, document.querySelector("#" + player1 + " > td:nth-child(4)").innerHTML++
             }
             updateScores()
         }
@@ -221,9 +216,37 @@
     <script>
         function getCurrentStandings(){
             table = document.getElementById("Standings")
-            fetch("standings.html")
-            .then((response) => response.json())
-            .then((data) => console.log(data));
+            var jsdom = require("jsdom"),
+            fs = require('fs');
+
+            if (process.argv.length < 3) {
+                console.log('Usage: node ' + process.argv[1] + ' standings.html');
+                process.exit(1);
+            }
+
+            var file = process.argv[2];
+            fs.readFile(file, 'utf8', function(err, data) {
+            if (err) throw err;
+
+            jsdom.env(
+            data,
+            ["http://code.jquery.com/jquery.js"],
+            function (errors, window) {
+                var $ = window.jQuery;
+
+                $("p, li").each(function(){
+                    $(this).attr("data-test", "test");
+                });
+                $(".jsdom").remove();
+                console.log( window.document.doctype + window.document.innerHTML );
+                var output = window.document.doctype + window.document.innerHTML;
+
+                fs.writeFile(file, output, function(err) {
+                    if (err) throw err;
+                    console.log('It\'s saved!');
+                });
+            });
+            });
         }
         getCurrentStandings()
     </script>
